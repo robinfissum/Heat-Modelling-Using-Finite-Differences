@@ -1,0 +1,41 @@
+Information about the code.
+
+- To ensure stability of the scheme, make sure the CFL-condition is satisfied.
+Since we are using the same step size in the x,y and z-directions, this amounts to
+making sure that  0 < alpha * dt / dx ** 2 < 1/6, where alpha is the diffusivity
+(of air, in our case), dt is the time-step length, and dx is the spatial step length.
+
+
+- Note that it may be problematic to initialize the temperature of the room
+with a too irregular temperature distribution. For example, if the initial temperature is -30 everywhere,
+but 1000 degrees in a few nodes, then the temperature in the room may start to oscillate rapidly.
+
+SUGGESTIONS FOR IMPROVEMENTS:
+[] Add separate U-values for the floor and the ceiling(in constants.py, UValues class)
+[] Implement implicit scheme. This is not really necessary here though, as we are
+way inside the stability requirement, and the fact that "heat_equation_ghost_points_FAST" is quite fast.
+[] Implement advection- this may require an adaptive grid.
+[] Implement temperature dependent properties of air- this may require new mathematical equations.
+
+
+numerical_tests.py: Various tests to see if the code does what it is supposed to
+
+plots_and_gifs.py: Various functions to plot the room with temperatures
+
+ReadCSVTestResults.py: Script that allows for reading results (from running e.g. numerical_tests.py) from
+                       a CSV file for plotting.
+
+room.py:  Room object
+
+utilities.py:  Various helper functions.
+
+heat_equation_ghost_points.py:  Main code for solving the heat equation using finite difference method.
+
+heat_equation_ghost_points_FAST.py: Much faster code for solving the heat equation using finite difference method.
+                                    Not all tests in 'numerical_test.py' are compatible with this implementation.
+                                    It is faster, since it makes more clever use of vectorization, and avoids
+                                    iteration over the room nodes.
+
+A project report describing the mathematics used in the code can be found in the project files
+as 'ProjectReportAndPosterGroup4.pdf'
+
